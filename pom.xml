@@ -1,0 +1,28 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+
+    <!-- 指定项目使用 Maven 4.0.0 版本的模型 -->
+    <modelVersion>4.0.0</modelVersion>
+    <!-- 定义项目的组织标识 -->
+    <groupId>com.lizhengi</groupId>
+    <!-- 定义项目的工件标识 -->
+    <artifactId>lizhengi-java-framework</artifactId>
+    <!-- 定义项目的版本 -->
+    <version>1.0</version>
+    <!-- 打包方式 -->
+    <packaging>pom</packaging>
+    <!-- 定义项目的名称 -->
+    <name>lizhengi-java-framework</name>
+
+
+    <properties>
+        <java.version>8</java.version>
+    </properties>
+
+    <modules>
+       <module>lizhengi-maven</module>
+    </modules>
+
+</project>

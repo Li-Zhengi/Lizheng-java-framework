@@ -1,0 +1,133 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <!-- 指定项目使用 Maven 4.0.0 版本的模型 -->
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.lizhengi</groupId>
+        <artifactId>lizhengi-java-framework</artifactId>
+        <version>1.0</version>
+    </parent>
+
+    <artifactId>lizhengi-maven</artifactId>
+    <packaging>jar</packaging>
+    <name>lizhengi-maven</name>
+
+    <!-- 定义项目的属性 -->
+    <properties>
+        <project.name>lizhengi-myapp</project.name>
+    </properties>
+
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/*</include>
+                </includes>
+                <filtering>true</filtering> <!-- 启用筛选功能 -->
+            </resource>
+        </resources>
+        <plugins>
+            <!-- 指定 maven-resources-plugin 插件 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.2.0</version>
+                <executions>
+                    <!-- resources:resources 插件目标 -->
+                    <execution>
+                        <!-- 唯一的执行ID，用于标识此配置 -->
+                        <id>copy-resources</id>
+                        <!-- 绑定到 process-resources 生命周期阶段 -->
+                        <phase>process-resources</phase>
+                        <!-- 要执行的目标，resources 是标准目标 -->
+                        <goals>
+                            <goal>resources</goal>
+                        </goals>
+                        <configuration>
+                            <!-- 配置 outputDirectory 元素以指定主资源复制的目标目录, process-resources 阶段默认 ${project.build.outputDirectory} 即 'target/classes' -->
+                            <outputDirectory>${project.build.outputDirectory}</outputDirectory>
+                            <!-- 配置 useDefaultDelimiters 元素以除了自定义分隔符（如果有）之外，还使用默认分隔符, 默认 true -->
+                            <useDefaultDelimiters>true</useDefaultDelimiters>
+                            <!-- 配置 encoding 元素以指定在处理资源文件时使用的字符编码, 默认 `${project.build.sourceEncoding}`，需要在 properties 中显示定义 -->
+                            <encoding>UTF-8</encoding>
+                            <!-- 配置 delimiters | delimiter 元素以配置筛选分隔符 -->
+                            <delimiters>
+                                <delimiter>${*}</delimiter>
+                                <delimiter>@</delimiter>
+                            </delimiters>
+                            <!-- 配置 escapeString 元素以避免某些表达式被替换 -->
+                            <escapeString>\</escapeString>
+
+
+                        </configuration>
+                    </execution>
+                    <!-- resources:testResources 插件目标 -->
+                    <execution>
+                        <!-- 唯一的执行ID，用于标识此配置 -->
+                        <id>copy-test-resources</id>
+                        <!-- 绑定到 process-test-resources 生命周期阶段 -->
+                        <phase>process-test-resources</phase>
+                        <!-- 要执行的目标，testResources 是标准目标 -->
+                        <goals>
+                            <!-- 配置 outputDirectory 元素以指定测试资源复制的目标目录, process-test-resources 阶段默认 ${project.build.outputDirectory} 即 'target/classes' -->
+                            <goal>testResources</goal>
+                        </goals>
+                        <configuration>
+                            <!-- 配置 outputDirectory 元素以指定主资源复制的目标目录, 默认 ${project.build.outputDirectory} 即 'target/test-classes' -->
+                            <outputDirectory>${project.build.testOutputDirectory}</outputDirectory>
+                            <!-- 其余配置皆与 resources:resources 插件目标相同 -->
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- 指定 maven-clean-plugin 插件 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <!-- 配置 excludeDefaultDirectories 元素以删除时排除项目的默认输出目录, 默认 false-->
+                    <excludeDefaultDirectories>false</excludeDefaultDirectories>
+                    <!-- 配置 failOnError 元素以在删除时出现错误，仍继续进行构建, 默认 false-->
+                    <failOnError>true</failOnError>
+                    <!-- 配置 followSymLinks 元素以在删除时遵循符号链接, 默认 false-->
+                    <followSymLinks>false</followSymLinks>
+                    <!-- 配置 retryOnError 元素以在第一次尝试删除失败时进行再次尝试（在短暂延迟后）删除文件, 默认 false-->
+                    <retryOnError>true</retryOnError>
+                    <!-- 配置 skip 元素以禁用插件的执行, 默认 false-->
+                    <skip>false</skip>
+                    <!-- 配置 verbose 元素以设置插件用详细模式运行, 默认 false-->
+                    <verbose>false</verbose>
+                    <!-- 配置 filesets 元素以删除默认目录之外的文件和目录 -->
+                    <filesets>
+                        <fileset>
+                            <!-- 要删除的额外目录 -->
+                            <directory>extra-directory</directory>
+                            <!-- 包含 extra-directory 目录中的所有文件和子目录 -->
+                            <includes>
+                                <include>**/*</include>
+                            </includes>
+                            <!-- 排除 extra-directory 目录中的所有 .txt 文件 -->
+                            <excludes>
+                                <exclude>**/*.txt</exclude>
+                            </excludes>
+                        </fileset>
+                        <fileset>
+                            <!-- 要删除的另一个额外目录 -->
+                            <directory>another-directory</directory>
+                            <!-- 仅包含 another-directory 目录中的所有 .log 文件 -->
+                            <includes>
+                                <include>**/*.log</include>
+                            </includes>
+                        </fileset>
+                    </filesets>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+
+</project>
