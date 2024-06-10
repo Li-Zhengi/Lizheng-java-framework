@@ -39,7 +39,7 @@
                     <!-- resources:resources 插件目标 -->
                     <execution>
                         <!-- 唯一的执行ID，用于标识此配置 -->
-                        <id>copy-resources</id>
+                        <id>resources</id>
                         <!-- 绑定到 process-resources 生命周期阶段 -->
                         <phase>process-resources</phase>
                         <!-- 要执行的目标，resources 是标准目标 -->
@@ -60,8 +60,46 @@
                             </delimiters>
                             <!-- 配置 escapeString 元素以避免某些表达式被替换 -->
                             <escapeString>\</escapeString>
+                            <!-- 配置 escapeWindowsPaths 元素以在 windows 样式路径中转义反斜杠和冒号。默认为 true -->
+                            <escapeWindowsPaths>true</escapeWindowsPaths>
+                            <!-- 配置 fileNameFiltering 元素以支持过滤文件名、文件夹等。默认为 false -->
+                            <fileNameFiltering>true</fileNameFiltering>
+                            <!-- 配置 filters 元素以指定额外的属性文件列表，这些文件将在当前 Mojo 执行期间用于过滤 -->
+                            <filters>
+                                <filter>src/main/filters/filter1.properties</filter>
+                                <filter>src/main/filters/filter2.properties</filter>
+                            </filters>
+                            <!-- 配置 includeEmptyDirs 元素以复制 resources 元素中包含的任何空目录。默认为 false -->
+                            <includeEmptyDirs>true</includeEmptyDirs>
+                            <!-- 配置 mavenFilteringHints 元素以用于配置一组 Plexus 组件，这些组件提示列表可以用来扩展或自定义资源的过滤和处理过程。 -->
+                            <mavenFilteringHints>
+                                <hint>com.example.maven.filtering.MyCustomFilter1</hint>
+                                <hint>com.example.maven.filtering.MyCustomFilter2</hint>
+                            </mavenFilteringHints>
 
-
+                            <!-- 配置 nonFilteredFileExtensions 元素不进行过滤的文件扩展名列表（已定义为：`jpg`、`jpeg`、`gif`、`bmp`、`png`）。为 `java.util.List` 类型。 -->
+                            <nonFilteredFileExtensions>
+                                <nonFilteredFileExtension>jpg</nonFilteredFileExtension>
+                                <nonFilteredFileExtension>jpeg</nonFilteredFileExtension>
+                                <nonFilteredFileExtension>gif</nonFilteredFileExtension>
+                                <nonFilteredFileExtension>bmp</nonFilteredFileExtension>
+                                <nonFilteredFileExtension>png</nonFilteredFileExtension>
+                                <nonFilteredFileExtension>zip</nonFilteredFileExtension>
+                             </nonFilteredFileExtensions>
+                            <!-- 配置 overwrite 元素以覆盖现有文件，即使目标文件较新。默认为 false -->
+                            <overwrite>true</overwrite>
+                            <!-- 配置 propertiesEncoding 元素读取和写入过滤属性文件时要使用的字符编码。如果未指定，它将默认为 `encoding` 参数的值 -->
+                            <propertiesEncoding>true</propertiesEncoding>
+                            <!-- 配置 skip 元素可以跳过插件的执行。不推荐使用，但有时使用起来相当方便。默认为 `false`。 -->
+                            <skip>true</skip>
+                            <!-- 配置 supportMultiLineFiltering 元素以停止搜索行末尾的 `endToken`。默认为 `false` -->
+                            <supportMultiLineFiltering>true</supportMultiLineFiltering>
+                            <!-- 配置 fileNameFiltering 元素以支持过滤文件名、文件夹等。默认为 false -->
+                            <fileNameFiltering>true</fileNameFiltering>
+                            <!-- 配置 useBuildFilters 元素，如果为 `false`，则在处理此 Mojo 执行中的资源时，不要使用 POM 的 `build/filters` 部分中指定的过滤器。默认为 `true` -->
+                            <useBuildFilters>true</useBuildFilters>
+                            <!-- 配置 useDefaultDelimiters 元素除了自定义分隔符（如果有）之外，还使用默认分隔符。默认为 true -->
+                            <useDefaultDelimiters>true</useDefaultDelimiters>
                         </configuration>
                     </execution>
                     <!-- resources:testResources 插件目标 -->
